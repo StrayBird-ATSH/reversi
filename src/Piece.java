@@ -1,5 +1,7 @@
 public class Piece {
-    private boolean belongToUser = true;
+    private Color color;
 
-
+    public Piece(Color color) {
+        this.color = color;
+    }
 }

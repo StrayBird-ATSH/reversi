@@ -21,4 +21,9 @@ public class Board {
         this.size = size;
         pieces = new Piece[size][size];
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

@@ -13,6 +13,11 @@ public class Computer implements Playable {
         return true;
     }
 
+    @Override
+    public boolean placeable(Board board) {
+        return board.placeable(color);
+    }
+
     public void setColor(Color color) {
         this.color = color;
     }

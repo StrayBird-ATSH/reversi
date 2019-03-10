@@ -9,6 +9,11 @@ public class Person implements Playable {
         this.color = color;
     }
 
+    @Override
+    public boolean placeable(Board board) {
+        return board.placeable(color);
+    }
+
     public void setColor(Color color) {
         this.color = color;
     }

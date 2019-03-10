@@ -1,5 +1,5 @@
 abstract public class Piece {
-    private Color color;
+    Color color;
 
     public Piece() {
     }

@@ -35,16 +35,13 @@ public class Main {
             System.exit(0);
         }
         boolean computerTurn = !(board.getUserColor() == Color.BLACK);
+        boolean computerPlacable;
+        boolean userPlaceable;
         while (board.userCount + board.comCount < board.size * board.size) {
-            boolean computerPlacable = computer.placeable();
-            boolean userPlaceable = person.placeable();
-            if (!computerPlacable && !userPlaceable) break;
-            if (computerTurn && computerPlacable) {
-                computer.place();
-
-            } else if (userPlaceable) {
-                person.place();
-            }
+            if (computerTurn) {
+                if (computer.placeable(board)) computer.place();
+            } else if (person.placeable(board)) person.place();
+            computerTurn = !computerTurn;
         }
     }
 

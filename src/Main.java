@@ -37,23 +37,14 @@ public class Main {
         boolean computerTurn = !(board.getUserColor() == Color.BLACK);
         while (board.userCount + board.comCount < board.size * board.size) {
             boolean computerPlacable = computer.placeable();
-            boolean userPlacable = person.placeable();
-            if (!computerPlacable && !userPlacable) break;
+            boolean userPlaceable = person.placeable();
+            if (!computerPlacable && !userPlaceable) break;
             if (computerTurn && computerPlacable) {
                 computer.place();
 
-            } else if (userPlacable) {
+            } else if (userPlaceable) {
                 person.place();
-                System.out.println(promptUser);
-                String input1 = input.nextLine();
-                if (userPutPiece(board, input1)) continue;
-                else {
-                    System.out.println("Invalid move. ");
-                }
-
             }
-
-
         }
     }
 

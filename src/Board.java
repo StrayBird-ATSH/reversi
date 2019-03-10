@@ -11,10 +11,10 @@ public class Board {
 
     public void setUserColor(Color userColor) {
         this.userColor = userColor;
-        pieces[size / 2 - 1][size / 2 - 1] = new Piece(Color.WHITE);
-        pieces[size / 2][size / 2] = new Piece(Color.WHITE);
-        pieces[size / 2 - 1][size / 2] = new Piece(Color.BLACK);
-        pieces[size / 2][size / 2 - 1] = new Piece(Color.BLACK);
+        pieces[size / 2 - 1][size / 2 - 1] = new WhitePiece();
+        pieces[size / 2][size / 2] = new WhitePiece();
+        pieces[size / 2 - 1][size / 2] = new BlackPiece();
+        pieces[size / 2][size / 2 - 1] = new BlackPiece();
     }
 
     public Board(int size) {

@@ -7,4 +7,6 @@ abstract public class Piece {
     public Piece(Color color) {
         this.color = color;
     }
+
+    abstract void placeable();
 }

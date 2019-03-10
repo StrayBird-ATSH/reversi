@@ -2,24 +2,31 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
         System.out.println("Welcome to the Reversi game!\n" +
                 "Enter the board dimension:");
-        Scanner input = new Scanner(System.in);
         int size = input.nextInt();
         if (size % 2 != 0 || size > 11) {
             System.out.println("The size should be even and less than 10.");
             System.exit(0);
         }
         Board board = new Board(size);
+        Person person = new Person();
+        Computer computer = new Computer();
+
         System.out.println("Computer plays (X/O): ");
-        String string = input.nextLine();
+        String userSelection = input.nextLine();
         String promptUser = "";
         String promptCom = "";
-        if (string.charAt(0) == 'X') {
+        if (userSelection.charAt(0) == 'X') {
+            person.setColor(Color.WHITE);
+            computer.setColor(Color.BLACK);
             board.setUserColor(Color.WHITE);
             promptUser = "Enter move for O (RowCol):";
             promptCom = "Computer places X at ";
-        } else if (string.charAt(0) == 'O') {
+        } else if (userSelection.charAt(0) == 'O') {
+            person.setColor(Color.BLACK);
+            computer.setColor(Color.WHITE);
             board.setUserColor(Color.BLACK);
             promptUser = "Enter move for X (RowCol):";
             promptCom = "Computer places O at ";
@@ -29,13 +36,14 @@ public class Main {
         }
         boolean computerTurn = !(board.getUserColor() == Color.BLACK);
         while (board.userCount + board.comCount < board.size * board.size) {
-            if (computerTurn) {
-                if (!placePiece(board, Player.COMPUTER)) continue;
-                System.out.println(promptCom);
-                System.out.println(board.toString());
+            boolean computerPlacable = computer.placeable();
+            boolean userPlacable = person.placeable();
+            if (!computerPlacable && !userPlacable) break;
+            if (computerTurn && computerPlacable) {
+                computer.place();
 
-            } else {
-                if (!placePiece(board, Player.USER)) continue;
+            } else if (userPlacable) {
+                person.place();
                 System.out.println(promptUser);
                 String input1 = input.nextLine();
                 if (userPutPiece(board, input1)) continue;

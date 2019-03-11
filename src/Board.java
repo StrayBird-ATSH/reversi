@@ -108,12 +108,19 @@ public class Board {
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
                 if (pieces[i][j] == null) {
-                    currentScore = calculateScore(i, j);
+                    currentScore = calculateScore(i, j, false);
                     if (currentScore > highestScore) {
                         optimalI = i;
                         optimalJ = j;
                     }
                 }
+        flip(optimalI, optimalJ, userColor);
+    }
+
+    void flip(int optimalI, int optimalJ, Color userColor) {
+        ArrayList<Integer> flipRow = new ArrayList<>();
+        ArrayList<Integer> flipColumn = new ArrayList<>();
+
         pieces[optimalI][optimalJ] = userColor == Color.BLACK ? new WhitePiece() : new BlackPiece();
         if (optimalI >= 1 && pieces[optimalI - 1][optimalJ] != null && pieces[optimalI - 1][optimalJ].color == userColor) {
             for (int row = optimalI; row >= 0; row--) {
@@ -249,7 +256,9 @@ public class Board {
     }
 
 
-    private int calculateScore(int i, int j) {
+    int calculateScore(int i, int j, boolean isUser) {
+        Color userColor = this.userColor;
+        if (isUser) userColor = userColor == Color.BLACK ? Color.WHITE : Color.BLACK;
         int score = 0;
         int temporaryScore = 0;
 //        Up
@@ -348,12 +357,19 @@ public class Board {
     }
 
     void finish() {
-//        todo
+        System.out.println("C:" + comCount + "    Per:" + userCount);
     }
 
     @Override
     public String toString() {
-//        todo
-        return super.toString();
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (pieces[i][j] == null) result.append(". ");
+                else result.append(pieces[i][j]);
+            }
+            result.append("\n");
+        }
+        return result.toString();
     }
 }

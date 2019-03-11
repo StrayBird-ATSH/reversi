@@ -1,5 +1,5 @@
 abstract class Piece {
-    static Color color;
+    Color color;
 
     Piece() {
     }
@@ -9,7 +9,9 @@ abstract class Piece {
 
     abstract void personPrompt();
 
-    abstract boolean placeable(Board board);
+    abstract Color getColor();
+
+    abstract boolean placeable(Board board, boolean isUser);
 
     @Override
     abstract public String toString();

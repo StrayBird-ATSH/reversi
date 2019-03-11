@@ -13,7 +13,7 @@ public class Person implements Playable {
 
     @Override
     public boolean placeable(Board board) {
-        return piece.placeable(board);
+        return piece.placeable(board, true);
     }
 
     @Override

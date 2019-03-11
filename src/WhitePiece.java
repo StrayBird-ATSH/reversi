@@ -1,9 +1,16 @@
 class WhitePiece extends Piece {
-    private final static Color color = Color.WHITE;
+    WhitePiece() {
+        color = Color.WHITE;
+    }
 
     @Override
-    boolean placeable(Board board) {
-        return board.placeable(color);
+    boolean placeable(Board board, boolean isUser) {
+        return board.checkCanPlace(isUser);
+    }
+
+    @Override
+    Color getColor() {
+        return color;
     }
 
     @Override
@@ -23,6 +30,5 @@ class WhitePiece extends Piece {
 
     @Override
     void placeOptimal(Board board) {
-
     }
 }

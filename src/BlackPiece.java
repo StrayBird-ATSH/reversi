@@ -1,9 +1,17 @@
 class BlackPiece extends Piece {
-    private static final Color color = Color.BLACK;
 
     @Override
     void personPrompt() {
         System.out.println("Enter move for X (RowCol):");
+    }
+
+    BlackPiece() {
+        color = Color.BLACK;
+    }
+
+    @Override
+    Color getColor() {
+        return color;
     }
 
     @Override
@@ -12,8 +20,8 @@ class BlackPiece extends Piece {
     }
 
     @Override
-    boolean placeable(Board board) {
-        return board.placeable(color);
+    boolean placeable(Board board, boolean isUser) {
+        return board.checkCanPlace(isUser);
     }
 
     @Override

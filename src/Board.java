@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Board {
     int size;
-    Piece[][] pieces;
+    private Piece[][] pieces;
     int comCount = 0;
     int userCount = 0;
     Color userColor;
@@ -27,33 +27,18 @@ public class Board {
     boolean placeable(Color color) {
         ArrayList<Color> colorSequence;
 //        In row direction
-        for (int i = 0; i < size; i++) {
-            colorSequence = new ArrayList<>();
-            for (int j = 0; j < size; j++) {
-                if (checkCanPlace(color, i, j, colorSequence)) return true;
-            }
-        }
+        if (checkIterator(color, true)) return true;
 //        In column direction
-        for (int j = 0; j < size; j++) {
-            colorSequence = new ArrayList<>();
-            for (int i = 0; i < size; i++) {
-                if (checkCanPlace(color, i, j, colorSequence)) return true;
-            }
-        }
+        if (checkIterator(color, false)) return true;
 //        In diagonal direction
-        for (int j = 0; j < size; j++) {
-            int column = j;
-            colorSequence = new ArrayList<>();
-            for (int i = 0; i < size && column < size; i++, column++) {
-                if (checkCanPlace(color, i, j, colorSequence)) return true;
-            }
-        }
+        if (checkDiagonalIterator(color, false)) return true;
+        if (checkDiagonalIterator(color, true)) return true;
 
         for (int i = 1; i < size; i++) {
             int row = i;
             colorSequence = new ArrayList<>();
             for (int j = 0; j < size && row < size; j++, row++) {
-                if (checkCanPlace(color, i, j, colorSequence)) return true;
+                if (checkCanPlace(color, row, j, colorSequence)) return true;
             }
         }
 
@@ -64,7 +49,7 @@ public class Board {
             int row = i;
             colorSequence = new ArrayList<>();
             for (int j = 0; j < size && row >= 0; j++, row--) {
-                if (checkCanPlace(color, i, j, colorSequence)) return true;
+                if (checkCanPlace(color, row, j, colorSequence)) return true;
             }
         }
 
@@ -72,12 +57,37 @@ public class Board {
             int column = j;
             colorSequence = new ArrayList<>();
             for (int i = size - 1; i >= 0 && column < size; i--, column++) {
-                if (checkCanPlace(color, i, j, colorSequence)) return true;
+                if (checkCanPlace(color, i, column, colorSequence)) return true;
             }
         }
         return false;
     }
 
+    private boolean checkIterator(Color color, boolean isRow) {
+        ArrayList<Color> colorSequence;
+        for (int i = 0; i < size; i++) {
+            colorSequence = new ArrayList<>();
+            for (int j = 0; j < size; j++) {
+                if (isRow ? checkCanPlace(color, i, j, colorSequence) : checkCanPlace(color, j, i, colorSequence))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+
+    private boolean checkDiagonalIterator(Color color, boolean isCounter) {
+        ArrayList<Color> colorSequence;
+        for (int i = 0; i < size; i++) {
+            int k = i;
+            colorSequence = new ArrayList<>();
+            for (int j = 0; j < size && k < size; j++, k++) {
+                if (!isCounter ? checkCanPlace(color, j, k, colorSequence) : checkCanPlace(color, k, j, colorSequence))
+                    return true;
+            }
+        }
+        return false;
+    }
 
     private boolean checkCanPlace(Color color, int i, int j, ArrayList<Color> colorSequence) {
         Color inverseColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;

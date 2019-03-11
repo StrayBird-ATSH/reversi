@@ -1,5 +1,5 @@
 class BlackPiece extends Piece {
-    private final static Color color = Color.BLACK;
+    private static final Color color = Color.BLACK;
 
     @Override
     void personPrompt() {

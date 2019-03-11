@@ -1,5 +1,5 @@
 abstract class Piece {
-    Color color;
+    static Color color;
 
     Piece() {
     }

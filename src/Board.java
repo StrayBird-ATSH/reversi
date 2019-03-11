@@ -25,39 +25,19 @@ public class Board {
     }
 
     boolean placeable(Color color) {
-        Color inverseColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
         ArrayList<Color> colorSequence;
-        Color currentColor;
 //        In row direction
         for (int i = 0; i < size; i++) {
             colorSequence = new ArrayList<>();
             for (int j = 0; j < size; j++) {
-                if (pieces[i][j] == null) currentColor = null;
-                else currentColor = pieces[i][j].color;
-                if (colorSequence.size() == 0) colorSequence.add(currentColor);
-                else if (colorSequence.get(colorSequence.size() - 1) != currentColor) {
-                    colorSequence.add(currentColor);
-                    if (colorSequence.size() >= 3 &&
-                            colorSequence.get(colorSequence.size() - 2) == inverseColor &&
-                            !(colorSequence.get(colorSequence.size() - 1) == null &&
-                                    colorSequence.get(colorSequence.size() - 3) == null)) return true;
-                }
+                if (checkCanPlace(color, i, j, colorSequence)) return true;
             }
         }
 //        In column direction
         for (int j = 0; j < size; j++) {
             colorSequence = new ArrayList<>();
             for (int i = 0; i < size; i++) {
-                if (pieces[i][j] == null) currentColor = null;
-                else currentColor = pieces[i][j].color;
-                if (colorSequence.size() == 0) colorSequence.add(currentColor);
-                else if (colorSequence.get(colorSequence.size() - 1) != currentColor) {
-                    colorSequence.add(currentColor);
-                    if (colorSequence.size() >= 3 &&
-                            colorSequence.get(colorSequence.size() - 2) == inverseColor &&
-                            !(colorSequence.get(colorSequence.size() - 1) == null &&
-                                    colorSequence.get(colorSequence.size() - 3) == null)) return true;
-                }
+                if (checkCanPlace(color, i, j, colorSequence)) return true;
             }
         }
 //        In diagonal direction
@@ -65,16 +45,7 @@ public class Board {
             int column = j;
             colorSequence = new ArrayList<>();
             for (int i = 0; i < size && column < size; i++, column++) {
-                if (pieces[i][column] == null) currentColor = null;
-                else currentColor = pieces[i][column].color;
-                if (colorSequence.size() == 0) colorSequence.add(currentColor);
-                else if (colorSequence.get(colorSequence.size() - 1) != currentColor) {
-                    colorSequence.add(currentColor);
-                    if (colorSequence.size() >= 3 &&
-                            colorSequence.get(colorSequence.size() - 2) == inverseColor &&
-                            !(colorSequence.get(colorSequence.size() - 1) == null &&
-                                    colorSequence.get(colorSequence.size() - 3) == null)) return true;
-                }
+                if (checkCanPlace(color, i, j, colorSequence)) return true;
             }
         }
 
@@ -82,16 +53,7 @@ public class Board {
             int row = i;
             colorSequence = new ArrayList<>();
             for (int j = 0; j < size && row < size; j++, row++) {
-                if (pieces[row][j] == null) currentColor = null;
-                else currentColor = pieces[row][j].color;
-                if (colorSequence.size() == 0) colorSequence.add(currentColor);
-                else if (colorSequence.get(colorSequence.size() - 1) != currentColor) {
-                    colorSequence.add(currentColor);
-                    if (colorSequence.size() >= 3 &&
-                            colorSequence.get(colorSequence.size() - 2) == inverseColor &&
-                            !(colorSequence.get(colorSequence.size() - 1) == null &&
-                                    colorSequence.get(colorSequence.size() - 3) == null)) return true;
-                }
+                if (checkCanPlace(color, i, j, colorSequence)) return true;
             }
         }
 
@@ -102,35 +64,34 @@ public class Board {
             int row = i;
             colorSequence = new ArrayList<>();
             for (int j = 0; j < size && row >= 0; j++, row--) {
-                if (pieces[row][j] == null) currentColor = null;
-                else currentColor = pieces[row][j].color;
-                if (colorSequence.size() == 0) colorSequence.add(currentColor);
-                else if (colorSequence.get(colorSequence.size() - 1) != currentColor) {
-                    colorSequence.add(currentColor);
-                    if (colorSequence.size() >= 3 &&
-                            colorSequence.get(colorSequence.size() - 2) == inverseColor &&
-                            !(colorSequence.get(colorSequence.size() - 1) == null &&
-                                    colorSequence.get(colorSequence.size() - 3) == null)) return true;
-                }
+                if (checkCanPlace(color, i, j, colorSequence)) return true;
             }
         }
-
 
         for (int j = 1; j < size; j++) {
             int column = j;
             colorSequence = new ArrayList<>();
             for (int i = size - 1; i >= 0 && column < size; i--, column++) {
-                if (pieces[i][column] == null) currentColor = null;
-                else currentColor = pieces[i][column].color;
-                if (colorSequence.size() == 0) colorSequence.add(currentColor);
-                else if (colorSequence.get(colorSequence.size() - 1) != currentColor) {
-                    colorSequence.add(currentColor);
-                    if (colorSequence.size() >= 3 &&
-                            colorSequence.get(colorSequence.size() - 2) == inverseColor &&
-                            !(colorSequence.get(colorSequence.size() - 1) == null &&
-                                    colorSequence.get(colorSequence.size() - 3) == null)) return true;
-                }
+                if (checkCanPlace(color, i, j, colorSequence)) return true;
             }
+        }
+        return false;
+    }
+
+
+    private boolean checkCanPlace(Color color, int i, int j, ArrayList<Color> colorSequence) {
+        Color inverseColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
+        Color currentColor;
+        if (pieces[i][j] == null) currentColor = null;
+        else currentColor = pieces[i][j].color;
+        if (colorSequence.size() == 0) colorSequence.add(currentColor);
+        else if (colorSequence.get(colorSequence.size() - 1) != currentColor) {
+            colorSequence.add(currentColor);
+
+            return colorSequence.size() >= 3 &&
+                    colorSequence.get(colorSequence.size() - 2) == inverseColor &&
+                    !(colorSequence.get(colorSequence.size() - 1) == null &&
+                            colorSequence.get(colorSequence.size() - 3) == null);
         }
         return false;
     }

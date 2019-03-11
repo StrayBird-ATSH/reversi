@@ -78,21 +78,63 @@ public class Board {
     private boolean checkCanPlace(Color color, int i, int j, ArrayList<Color> colorSequence) {
         Color inverseColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
         Color currentColor;
-        if (pieces[i][j] == null) currentColor = null;
+        if (pieces[i][j] == null) currentColor = Color.NULL;
         else currentColor = pieces[i][j].color;
         if (colorSequence.size() == 0) colorSequence.add(currentColor);
         else if (colorSequence.get(colorSequence.size() - 1) != currentColor) {
             colorSequence.add(currentColor);
             return colorSequence.size() >= 3 &&
                     colorSequence.get(colorSequence.size() - 2) == inverseColor &&
-                    !(colorSequence.get(colorSequence.size() - 1) == null &&
-                            colorSequence.get(colorSequence.size() - 3) == null);
+                    !(colorSequence.get(colorSequence.size() - 1) == Color.NULL &&
+                            colorSequence.get(colorSequence.size() - 3) == Color.NULL);
         }
         return false;
     }
 
     void placeOptimal(Color color) {
-
+        int globalMaxPoint = 0;
+        int currentPoint = 0;
+        boolean vacantFlag = false, inverseFlag = false, colorFlag = false;
+        Color inverseColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
+        Color currentColor;
+        int optimalI, optimalJ;
+        int vacantI = 0, vacantJ = 0;
+//        Row dimension
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (pieces[i][j] == null) currentColor = Color.NULL;
+                else currentColor = pieces[i][j].color;
+                if (currentColor == Color.NULL) {
+                    if (colorFlag && inverseFlag && currentPoint > globalMaxPoint) {
+                        globalMaxPoint = currentPoint;
+                        optimalI = i;
+                        optimalJ = j;
+                    }
+                    vacantI = i;
+                    vacantJ = j;
+                    vacantFlag = true;
+                    inverseFlag = false;
+                    colorFlag = false;
+                    currentPoint = 0;
+                } else if (currentColor == color) {
+                    if (inverseFlag && vacantFlag && currentPoint > globalMaxPoint) {
+                        globalMaxPoint = currentPoint;
+                        optimalI = vacantI;
+                        optimalJ = vacantJ;
+                    }
+                    colorFlag = true;
+                    inverseFlag = false;
+                    vacantFlag = false;
+                    currentPoint = 0;
+                } else if (currentColor == inverseColor && colorFlag || vacantFlag) {
+                    currentPoint++;
+                    inverseFlag = true;
+                }
+            }
+            vacantFlag = false;
+            colorFlag = false;
+            inverseFlag = false;
+        }
     }
 
 

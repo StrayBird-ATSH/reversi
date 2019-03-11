@@ -1,25 +1,20 @@
 public class Person implements Playable {
 
-    Color color;
+    private Piece piece;
 
-    public Person() {
+    Person() {
     }
 
-    public Person(Color color) {
-        this.color = color;
+    void setPiece(Piece piece) {
+        this.piece = piece;
     }
 
     @Override
     public boolean placeable(Board board) {
-        return board.placeable(color);
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
+        return piece.placeable(board);
     }
 
     @Override
-    public boolean place() {
-        return true;
+    public void place() {
     }
 }

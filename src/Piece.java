@@ -1,12 +1,8 @@
-abstract public class Piece {
+abstract class Piece {
     Color color;
 
-    public Piece() {
+    Piece() {
     }
 
-    public Piece(Color color) {
-        this.color = color;
-    }
-
-    abstract void placeable();
+    abstract boolean placeable(Board board);
 }

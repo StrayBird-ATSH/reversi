@@ -1,24 +1,23 @@
 public class Computer implements Playable {
-    Color color;
 
-    public Computer(Color color) {
-        this.color = color;
+    private Piece piece;
+
+    Computer() {
     }
 
-    public Computer() {
+    void setPiece(Piece piece) {
+        this.piece = piece;
     }
 
     @Override
-    public boolean place() {
-        return true;
+    public void place() {
+
     }
 
     @Override
     public boolean placeable(Board board) {
-        return board.placeable(color);
+        return piece.placeable(board);
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+
 }

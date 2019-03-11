@@ -13,64 +13,28 @@ public class Main {
         Board board = new Board(size);
         Person person = new Person();
         Computer computer = new Computer();
-
         System.out.println("Computer plays (X/O): ");
         String userSelection = input.nextLine();
-        String promptUser = "";
-        String promptCom = "";
         if (userSelection.charAt(0) == 'X') {
-            person.setColor(Color.WHITE);
-            computer.setColor(Color.BLACK);
             board.setUserColor(Color.WHITE);
-            promptUser = "Enter move for O (RowCol):";
-            promptCom = "Computer places X at ";
+            person.setPiece(new WhitePiece());
+            computer.setPiece(new BlackPiece());
         } else if (userSelection.charAt(0) == 'O') {
-            person.setColor(Color.BLACK);
-            computer.setColor(Color.WHITE);
+            person.setPiece(new BlackPiece());
+            computer.setPiece(new WhitePiece());
             board.setUserColor(Color.BLACK);
-            promptUser = "Enter move for X (RowCol):";
-            promptCom = "Computer places O at ";
         } else {
             System.out.println("Your input is illegal.");
             System.exit(0);
         }
         boolean computerTurn = !(board.getUserColor() == Color.BLACK);
-        boolean computerPlacable;
-        boolean userPlaceable;
         while (board.userCount + board.comCount < board.size * board.size) {
             if (computerTurn) {
                 if (computer.placeable(board)) computer.place();
+                else if (!person.placeable(board)) board.finish();
             } else if (person.placeable(board)) person.place();
             computerTurn = !computerTurn;
         }
-    }
-
-    public static boolean placePiece(Board board, Player player) {
-        Color userColor = board.getUserColor();
-        Color placingPieceColor;
-        if (player == Player.USER) placingPieceColor = userColor;
-        else placingPieceColor = userColor == Color.BLACK ? Color.WHITE : Color.BLACK;
-        int column = 0;
-        int row = 0;
-        int currentScore = 0;
-        int calculatedScore;
-        for (int i = 0; i < board.size; i++)
-            for (int j = 0; j < board.size; j++) {
-                calculatedScore = calculateScore(board, row, column, placingPieceColor);
-                if (calculatedScore > currentScore) {
-                    row = i;
-                    column = j;
-                    currentScore = calculatedScore;
-                }
-            }
-        return currentScore != 0;
-    }
-
-    public static int calculateScore(Board board, int row, int column, Color placingPieceColor) {
-        return 0;
-    }
-
-    public static boolean userPutPiece(Board board, String input) {
-        return calculateScore(board, (input.charAt(0) - 'a'), (input.charAt(1) - 'a'), board.userColor) != 0;
+        board.finish();
     }
 }

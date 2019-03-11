@@ -1,6 +1,8 @@
-public class BlackPiece extends Piece {
-    @Override
-    void placeable() {
+class BlackPiece extends Piece {
+    private final static Color color = Color.BLACK;
 
+    @Override
+    boolean placeable(Board board) {
+        return board.placeable(color);
     }
 }

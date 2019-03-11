@@ -100,10 +100,41 @@ public class Board {
         int optimalI, optimalJ;
         int vacantI = 0, vacantJ = 0;
 //        Row dimension
+        OptimalPosition row = scanPosition(true, color);
+        globalMaxPoint = row.count;
+        optimalI = row.row;
+        optimalJ = row.column;
+        //        Column dimension
+        OptimalPosition column = scanPosition(false, color);
+        if (column.count > globalMaxPoint) {
+            optimalI = column.row;
+            optimalJ = column.column;
+        }
+        //        In diagonal direction
+
+
+    }
+
+
+    private OptimalPosition scanPosition(boolean isRow, Color color) {
+
+        int globalMaxPoint = 0;
+        int currentPoint = 0;
+        boolean vacantFlag = false, inverseFlag = false, colorFlag = false;
+        Color inverseColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
+        Color currentColor;
+        int optimalI = 0, optimalJ = 0;
+        int vacantI = 0, vacantJ = 0;
+
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (pieces[i][j] == null) currentColor = Color.NULL;
-                else currentColor = pieces[i][j].color;
+                if (isRow) {
+                    if (pieces[i][j] == null) currentColor = Color.NULL;
+                    else currentColor = pieces[i][j].color;
+                } else if (pieces[j][i] == null) currentColor = Color.NULL;
+                else currentColor = pieces[j][i].color;
+
+
                 if (currentColor == Color.NULL) {
                     if (colorFlag && inverseFlag && currentPoint > globalMaxPoint) {
                         globalMaxPoint = currentPoint;
@@ -135,6 +166,8 @@ public class Board {
             colorFlag = false;
             inverseFlag = false;
         }
+        if (isRow) return new OptimalPosition(optimalI, optimalJ, globalMaxPoint);
+        return new OptimalPosition(optimalJ, optimalI, globalMaxPoint);
     }
 
 

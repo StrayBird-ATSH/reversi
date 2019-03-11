@@ -6,10 +6,12 @@ public class Board {
     int comCount = 0;
     int userCount = 0;
     private Color userColor;
+    private OptimalAttributes place;
 
     Board(int size) {
         this.size = size;
         pieces = new Piece[size][size];
+        place = new OptimalAttributes();
     }
 
     Color getUserColor() {
@@ -23,6 +25,8 @@ public class Board {
         pieces[size / 2 - 1][size / 2] = new BlackPiece();
         pieces[size / 2][size / 2 - 1] = new BlackPiece();
     }
+
+    /*     PLACE-ABLE CHECKER ----START-----     */
 
     boolean placeable(Color color) {
         ArrayList<Color> colorSequence;
@@ -91,83 +95,76 @@ public class Board {
         return false;
     }
 
+
+    /*     PLACE-ABLE CHECKER ----END-----     */
+
     void placeOptimal(Color color) {
-        int globalMaxPoint = 0;
-        int currentPoint = 0;
-        boolean vacantFlag = false, inverseFlag = false, colorFlag = false;
-        Color inverseColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
-        Color currentColor;
-        int optimalI, optimalJ;
-        int vacantI = 0, vacantJ = 0;
+        place.color = color;
+        place.inverseColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
 //        Row dimension
-        OptimalPosition row = scanPosition(true, color);
-        globalMaxPoint = row.count;
-        optimalI = row.row;
-        optimalJ = row.column;
+        scanPosition(true);
         //        Column dimension
-        OptimalPosition column = scanPosition(false, color);
-        if (column.count > globalMaxPoint) {
-            optimalI = column.row;
-            optimalJ = column.column;
-        }
+        scanPosition(false);
         //        In diagonal direction
 
 
     }
 
 
-    private OptimalPosition scanPosition(boolean isRow, Color color) {
-
-        int globalMaxPoint = 0;
-        int currentPoint = 0;
-        boolean vacantFlag = false, inverseFlag = false, colorFlag = false;
-        Color inverseColor = color == Color.BLACK ? Color.WHITE : Color.BLACK;
-        Color currentColor;
-        int optimalI = 0, optimalJ = 0;
-        int vacantI = 0, vacantJ = 0;
-
+    private void scanPosition(boolean isRow) {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (isRow) {
-                    if (pieces[i][j] == null) currentColor = Color.NULL;
-                    else currentColor = pieces[i][j].color;
-                } else if (pieces[j][i] == null) currentColor = Color.NULL;
-                else currentColor = pieces[j][i].color;
+                    if (pieces[i][j] == null) place.currentColor = Color.NULL;
+                    else place.currentColor = pieces[i][j].color;
+                } else if (pieces[j][i] == null) place.currentColor = Color.NULL;
+                else place.currentColor = pieces[j][i].color;
 
 
-                if (currentColor == Color.NULL) {
-                    if (colorFlag && inverseFlag && currentPoint > globalMaxPoint) {
-                        globalMaxPoint = currentPoint;
-                        optimalI = i;
-                        optimalJ = j;
+                if (place.currentColor == Color.NULL) {
+                    if (place.colorFlag && place.inverseFlag && place.currentPoint >
+                            place.globalMaxPoint) {
+                        place.globalMaxPoint = place.currentPoint;
+                        if (isRow) {
+                            place.optimalI = i;
+                            place.optimalJ = j;
+                        } else {
+                            place.optimalJ = i;
+                            place.optimalI = j;
+                        }
                     }
-                    vacantI = i;
-                    vacantJ = j;
-                    vacantFlag = true;
-                    inverseFlag = false;
-                    colorFlag = false;
-                    currentPoint = 0;
-                } else if (currentColor == color) {
-                    if (inverseFlag && vacantFlag && currentPoint > globalMaxPoint) {
-                        globalMaxPoint = currentPoint;
-                        optimalI = vacantI;
-                        optimalJ = vacantJ;
+                    place.vacantI = i;
+                    place.vacantJ = j;
+                    place.vacantFlag = true;
+                    place.inverseFlag = false;
+                    place.colorFlag = false;
+                    place.currentPoint = 0;
+                } else if (place.currentColor == place.color) {
+                    if (place.inverseFlag && place.vacantFlag && place.currentPoint >
+                            place.globalMaxPoint) {
+                        place.globalMaxPoint = place.currentPoint;
+                        if (isRow) {
+                            place.optimalI = place.vacantI;
+                            place.optimalJ = place.vacantJ;
+                        } else {
+                            place.optimalI = place.vacantI;
+                            place.optimalJ = place.vacantJ;
+                        }
                     }
-                    colorFlag = true;
-                    inverseFlag = false;
-                    vacantFlag = false;
-                    currentPoint = 0;
-                } else if (currentColor == inverseColor && colorFlag || vacantFlag) {
-                    currentPoint++;
-                    inverseFlag = true;
+                    place.colorFlag = true;
+                    place.inverseFlag = false;
+                    place.vacantFlag = false;
+                    place.currentPoint = 0;
+                } else if (place.currentColor == place.inverseColor && place.colorFlag ||
+                        place.vacantFlag) {
+                    place.currentPoint++;
+                    place.inverseFlag = true;
                 }
             }
-            vacantFlag = false;
-            colorFlag = false;
-            inverseFlag = false;
+            place.vacantFlag = false;
+            place.colorFlag = false;
+            place.inverseFlag = false;
         }
-        if (isRow) return new OptimalPosition(optimalI, optimalJ, globalMaxPoint);
-        return new OptimalPosition(optimalJ, optimalI, globalMaxPoint);
     }
 
 

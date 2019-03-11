@@ -15,6 +15,7 @@ public class Person implements Playable {
     }
 
     @Override
-    public void place() {
+    public void place(Board board) {
+
     }
 }

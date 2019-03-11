@@ -1,5 +1,5 @@
 public interface Playable {
-    void place();
+    void place(Board board);
 
     boolean placeable(Board board);
 }

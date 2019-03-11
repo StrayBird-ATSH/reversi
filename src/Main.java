@@ -28,11 +28,12 @@ public class Main {
             System.exit(0);
         }
         boolean computerTurn = !(board.getUserColor() == Color.BLACK);
-        while (board.userCount + board.comCount < board.size * board.size) {
+        while (board.userCount + board.comCount < board.size * board.size &&
+                board.comCount != 0 && board.userCount != 0) {
             if (computerTurn) {
-                if (computer.placeable(board)) computer.place();
+                if (computer.placeable(board)) computer.place(board);
                 else if (!person.placeable(board)) board.finish();
-            } else if (person.placeable(board)) person.place();
+            } else if (person.placeable(board)) person.place(board);
             computerTurn = !computerTurn;
         }
         board.finish();

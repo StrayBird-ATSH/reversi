@@ -5,4 +5,9 @@ class BlackPiece extends Piece {
     boolean placeable(Board board) {
         return board.placeable(color);
     }
+
+    @Override
+    void placeOptimal(Board board) {
+        board.placeOptimal(color);
+    }
 }

@@ -1,5 +1,4 @@
 public class Computer implements Playable {
-
     private Piece piece;
 
     Computer() {
@@ -11,13 +10,11 @@ public class Computer implements Playable {
 
     @Override
     public void place(Board board) {
-
+        piece.placeOptimal(board);
     }
 
     @Override
     public boolean placeable(Board board) {
         return piece.placeable(board);
     }
-
-
 }

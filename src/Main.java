@@ -32,7 +32,7 @@ public class Main {
                 board.comCount != 0 && board.userCount != 0) {
             if (computerTurn) {
                 if (computer.placeable(board)) computer.place(board);
-                else if (!person.placeable(board)) board.finish();
+                else if (!person.placeable(board)) break;
             } else if (person.placeable(board)) person.place(board);
             computerTurn = !computerTurn;
         }

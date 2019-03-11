@@ -91,12 +91,18 @@ public class Board {
         return false;
     }
 
+    void placeOptimal(Color color) {
+
+    }
+
 
     void finish() {
+//        todo
     }
 
     @Override
     public String toString() {
+//        todo
         return super.toString();
     }
 }

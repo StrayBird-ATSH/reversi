@@ -16,6 +16,6 @@ public class Person implements Playable {
 
     @Override
     public void place(Board board) {
-
+//todo
     }
 }

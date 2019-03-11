@@ -62,13 +62,13 @@ public class Board {
     }
 
 
-    private boolean checkDiagonalIterator(Color color, boolean isCounter) {
+    private boolean checkDiagonalIterator(Color color, boolean isLower) {
         ArrayList<Color> colorSequence;
         for (int i = 0; i < size; i++) {
             int k = i;
             colorSequence = new ArrayList<>();
             for (int j = 0; j < size && k < size; j++, k++)
-                if (!isCounter ? checkCanPlace(color, j, k, colorSequence) :
+                if (!isLower ? checkCanPlace(color, j, k, colorSequence) :
                         checkCanPlace(color, k, j, colorSequence))
                     return true;
         }

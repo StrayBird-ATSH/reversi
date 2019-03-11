@@ -10,7 +10,7 @@ public class Computer implements Playable {
 
     @Override
     public void place(Board board) {
-        piece.placeOptimal(board);
+        board.placeOpt();
     }
 
     @Override

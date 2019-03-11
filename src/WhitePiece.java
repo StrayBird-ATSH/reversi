@@ -8,6 +8,6 @@ class WhitePiece extends Piece {
 
     @Override
     void placeOptimal(Board board) {
-        board.placeOptimal(color);
+
     }
 }

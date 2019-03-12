@@ -5,6 +5,8 @@ public class Board {
     private Piece[][] pieces;
     int comCount = 0;
     int userCount = 0;
+    private char computerPieceName = '0';
+    private char userPieceName = '0';
     private Color userColor;
 
     Board(int size) {
@@ -17,6 +19,13 @@ public class Board {
     }
 
     void setUserColor(Color userColor) {
+        if (userColor == Color.BLACK) {
+            computerPieceName = 'O';
+            userPieceName = 'X';
+        } else {
+            computerPieceName = 'X';
+            userPieceName = 'O';
+        }
         this.userColor = userColor;
         pieces[size / 2 - 1][size / 2 - 1] = new WhitePiece();
         pieces[size / 2][size / 2] = new WhitePiece();
@@ -123,7 +132,10 @@ public class Board {
                         optimalJ = j;
                     }
                 }
+        System.out.println("Computer places " + computerPieceName + " at " +
+                (char) ('a' + optimalI) + (char) ('a' + optimalJ) + ".");
         flip(optimalI, optimalJ, userColor);
+        System.out.println(this);
     }
 
     void flip(int optimalI, int optimalJ, Color userColor) {
@@ -145,6 +157,8 @@ public class Board {
                     break;
                 }
             }
+            flipColumn = new ArrayList<>();
+            flipRow = new ArrayList<>();
         }
 //        Left
         if (optimalJ >= 1 && pieces[optimalI][optimalJ - 1] != null && pieces[optimalI][optimalJ - 1].color == userColor) {
@@ -156,11 +170,11 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    flipColumn = new ArrayList<>();
-                    flipRow = new ArrayList<>();
                     break;
                 }
             }
+            flipColumn = new ArrayList<>();
+            flipRow = new ArrayList<>();
         }
 //        Down
         if (optimalI < size - 1 && pieces[optimalI + 1][optimalJ] != null && pieces[optimalI + 1][optimalJ].color == userColor) {
@@ -177,6 +191,8 @@ public class Board {
                     break;
                 }
             }
+            flipColumn = new ArrayList<>();
+            flipRow = new ArrayList<>();
         }
 //        Right
         if (optimalJ < size - 1 && pieces[optimalI][optimalJ + 1] != null && pieces[optimalI][optimalJ + 1].color == userColor) {
@@ -193,6 +209,8 @@ public class Board {
                     break;
                 }
             }
+            flipColumn = new ArrayList<>();
+            flipRow = new ArrayList<>();
         }
         //        Up-left
         if (optimalI >= 1 && optimalJ >= 1 && pieces[optimalI - 1][optimalJ - 1] != null && pieces[optimalI - 1][optimalJ - 1].color == userColor) {
@@ -209,6 +227,8 @@ public class Board {
                     break;
                 }
             }
+            flipColumn = new ArrayList<>();
+            flipRow = new ArrayList<>();
         }
 
 
@@ -227,10 +247,12 @@ public class Board {
                     break;
                 }
             }
+            flipColumn = new ArrayList<>();
+            flipRow = new ArrayList<>();
         }
         //        Down-left
         if (optimalI < size - 1 && optimalJ >= 1 && pieces[optimalI + 1][optimalJ - 1] != null && pieces[optimalI + 1][optimalJ - 1].color == userColor) {
-            for (int row = optimalI + 1, column = optimalJ - 1; row < size && column >= 0; row--, column--) {
+            for (int row = optimalI + 1, column = optimalJ - 1; row < size && column >= 0; row++, column--) {
                 if (pieces[row][column] == null) break;
                 else if (pieces[row][column].color == userColor) {
                     flipRow.add(row);
@@ -243,12 +265,14 @@ public class Board {
                     break;
                 }
             }
+            flipColumn = new ArrayList<>();
+            flipRow = new ArrayList<>();
         }
 
 
         //        Down-right
         if (optimalI < size - 1 && optimalJ < size - 1 && pieces[optimalI + 1][optimalJ + 1] != null && pieces[optimalI + 1][optimalJ + 1].color == userColor) {
-            for (int row = optimalI - 1, column = optimalJ - 1; row < size && column < size; row++, column++) {
+            for (int row = optimalI + 1, column = optimalJ + 1; row < size && column < size; row++, column++) {
                 if (pieces[row][column] == null) break;
                 else if (pieces[row][column].color == userColor) {
                     flipRow.add(row);
@@ -261,6 +285,8 @@ public class Board {
                     break;
                 }
             }
+            flipColumn = new ArrayList<>();
+            flipRow = new ArrayList<>();
         }
     }
 
@@ -272,6 +298,7 @@ public class Board {
         int temporaryScore = 0;
 //        Up
         if (i >= 1 && pieces[i - 1][j] != null && pieces[i - 1][j].color == userColor) {
+
             for (int row = i - 1; row >= 0; row--) {
                 if (pieces[row][j] == null) break;
                 else if (pieces[row][j].color == userColor) temporaryScore++;
@@ -283,6 +310,7 @@ public class Board {
         }
 //        Left
         if (j >= 1 && pieces[i][j - 1] != null && pieces[i][j - 1].color == userColor) {
+            temporaryScore = 0;
             for (int column = j - 1; column >= 0; column--) {
                 if (pieces[i][column] == null) break;
                 else if (pieces[i][column].color == userColor) temporaryScore++;
@@ -294,6 +322,7 @@ public class Board {
         }
 //        Down
         if (i < size - 1 && pieces[i + 1][j] != null && pieces[i + 1][j].color == userColor) {
+            temporaryScore = 0;
             for (int row = i + 1; row < size; row++) {
                 if (pieces[row][j] == null) break;
                 else if (pieces[row][j].color == userColor) temporaryScore++;
@@ -305,6 +334,7 @@ public class Board {
         }
 //        Right
         if (j < size - 1 && pieces[i][j + 1] != null && pieces[i][j + 1].color == userColor) {
+            temporaryScore = 0;
             for (int column = j + 1; column < size; column++) {
                 if (pieces[i][column] == null) break;
                 else if (pieces[i][column].color == userColor) temporaryScore++;
@@ -316,6 +346,7 @@ public class Board {
         }
         //        Up-left
         if (i >= 1 && j >= 1 && pieces[i - 1][j - 1] != null && pieces[i - 1][j - 1].color == userColor) {
+            temporaryScore = 0;
             for (int row = i - 1, column = j - 1; row >= 0 && column >= 0; row--, column--) {
                 if (pieces[row][column] == null) break;
                 else if (pieces[row][column].color == userColor) temporaryScore++;
@@ -329,6 +360,7 @@ public class Board {
 
         //        Up-right
         if (i >= 1 && j < size - 1 && pieces[i - 1][j + 1] != null && pieces[i - 1][j + 1].color == userColor) {
+            temporaryScore = 0;
             for (int row = i - 1, column = j + 1; row >= 0 && column < size; row--, column++) {
                 if (pieces[row][column] == null) break;
                 else if (pieces[row][column].color == userColor) temporaryScore++;
@@ -340,6 +372,7 @@ public class Board {
         }
         //        Down-left
         if (i < size - 1 && j >= 1 && pieces[i + 1][j - 1] != null && pieces[i + 1][j - 1].color == userColor) {
+            temporaryScore = 0;
             for (int row = i + 1, column = j - 1; row < size && column >= 0; row++, column--) {
                 if (pieces[row][column] == null) break;
                 else if (pieces[row][column].color == userColor) temporaryScore++;
@@ -353,6 +386,7 @@ public class Board {
 
         //        Down-right
         if (i < size - 1 && j < size - 1 && pieces[i + 1][j + 1] != null && pieces[i + 1][j + 1].color == userColor) {
+            temporaryScore = 0;
             for (int row = i + 1, column = j + 1; row < size && column < size; row++, column++) {
                 if (pieces[row][column] == null) break;
                 else if (pieces[row][column].color == userColor) temporaryScore++;
@@ -367,6 +401,7 @@ public class Board {
 
     void finish() {
         System.out.println("C:" + comCount + "    Per:" + userCount);
+        System.exit(0);
     }
 
     @Override

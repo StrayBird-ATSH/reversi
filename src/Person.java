@@ -22,12 +22,15 @@ public class Person implements Playable {
         Scanner input = new Scanner(System.in);
         String string = input.nextLine();
         int row = string.charAt(0) - 'a';
-        int column = string.charAt(0) - 'a';
-        if (row <= 0 || row > board.size || column <= 0 || column > board.size) {
+        int column = string.charAt(1) - 'a';
+        if (row < 0 || row >= board.size || column < 0 || column >= board.size) {
             System.out.println("Your input is illegal.");
             System.exit(0);
         }
         if (board.calculateScore(row, column, true) == 0) board.finish();
-        else board.flip(row, column, piece.color == Color.WHITE ? Color.BLACK : Color.WHITE);
+        else {
+            board.flip(row, column, piece.color == Color.WHITE ? Color.BLACK : Color.WHITE);
+            System.out.println(board);
+        }
     }
 }

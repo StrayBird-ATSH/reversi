@@ -452,7 +452,8 @@ public class Board {
                 "Game over.\n" +
                 "X : O = " + blackCount + " : " + whiteCount);
         if (blackCount > whiteCount) System.out.println("X player wins.");
-        else System.out.println("O player wins.");
+        else if (whiteCount > blackCount) System.out.println("O player wins.");
+        else System.out.println("Draw!");
         System.exit(0);
     }
 

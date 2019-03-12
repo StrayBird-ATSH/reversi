@@ -27,8 +27,11 @@ public class Person implements Playable {
             System.out.println("Your input is illegal.");
             System.exit(0);
         }
-        if (board.calculateScore(row, column, true) == 0) board.finish();
-        else {
+        if (board.calculateScore(row, column, true) == 0) {
+            if (piece instanceof BlackPiece) System.out.println("Invalid move.\nGame Over.\nO player wins.");
+            else System.out.println("Invalid move.\nGame Over.\nX player wins.");
+            System.exit(0);
+        } else {
             board.flip(row, column, piece.color == Color.WHITE ? Color.BLACK : Color.WHITE);
             System.out.println(board);
         }

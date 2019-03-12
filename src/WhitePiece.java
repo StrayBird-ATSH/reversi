@@ -15,7 +15,7 @@ class WhitePiece extends Piece {
 
     @Override
     public String toString() {
-        return "O";
+        return "O ";
     }
 
     @Override

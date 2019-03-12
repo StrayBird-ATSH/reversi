@@ -27,6 +27,7 @@ public class Main {
             System.out.println("Your input is illegal.");
             System.exit(0);
         }
+        System.out.println(board);
         boolean computerTurn = !(board.getUserColor() == Color.BLACK);
         while (board.userCount + board.comCount == 0 || board.userCount + board.comCount < board.size * board.size &&
                 board.comCount != 0 && board.userCount != 0) {

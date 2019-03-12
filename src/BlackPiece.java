@@ -31,6 +31,6 @@ class BlackPiece extends Piece {
 
     @Override
     public String toString() {
-        return "X";
+        return "X ";
     }
 }

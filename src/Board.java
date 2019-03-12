@@ -144,6 +144,7 @@ public class Board {
         boolean isUser = this.userColor != userColor;
         pieces[optimalI][optimalJ] = userColor == Color.BLACK ? new WhitePiece() : new BlackPiece();
         if (isUser) userCount++;
+        else comCount++;
         if (optimalI >= 1 && pieces[optimalI - 1][optimalJ] != null && pieces[optimalI - 1][optimalJ].color == userColor) {
             for (int row = optimalI - 1; row >= 0; row--) {
                 if (pieces[row][optimalJ] == null) break;
@@ -153,7 +154,13 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    if (isUser) userCount += flipRow.size();
+                    if (isUser) {
+                        userCount += flipRow.size();
+                        comCount -= flipRow.size();
+                    } else {
+                        userCount -= flipRow.size();
+                        comCount += flipRow.size();
+                    }
                     break;
                 }
             }
@@ -171,7 +178,13 @@ public class Board {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
 
-                    if (isUser) userCount += flipRow.size();
+                    if (isUser) {
+                        userCount += flipRow.size();
+                        comCount -= flipRow.size();
+                    } else {
+                        userCount -= flipRow.size();
+                        comCount += flipRow.size();
+                    }
                     break;
                 }
             }
@@ -188,7 +201,13 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    if (isUser) userCount += flipRow.size();
+                    if (isUser) {
+                        userCount += flipRow.size();
+                        comCount -= flipRow.size();
+                    } else {
+                        userCount -= flipRow.size();
+                        comCount += flipRow.size();
+                    }
                     break;
                 }
             }
@@ -205,7 +224,13 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    if (isUser) userCount += flipRow.size();
+                    if (isUser) {
+                        userCount += flipRow.size();
+                        comCount -= flipRow.size();
+                    } else {
+                        userCount -= flipRow.size();
+                        comCount += flipRow.size();
+                    }
                     break;
                 }
             }
@@ -222,7 +247,13 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    if (isUser) userCount += flipRow.size();
+                    if (isUser) {
+                        userCount += flipRow.size();
+                        comCount -= flipRow.size();
+                    } else {
+                        userCount -= flipRow.size();
+                        comCount += flipRow.size();
+                    }
                     break;
                 }
             }
@@ -241,7 +272,13 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    if (isUser) userCount += flipRow.size();
+                    if (isUser) {
+                        userCount += flipRow.size();
+                        comCount -= flipRow.size();
+                    } else {
+                        userCount -= flipRow.size();
+                        comCount += flipRow.size();
+                    }
                     break;
                 }
             }
@@ -258,7 +295,13 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    if (isUser) userCount += flipRow.size();
+                    if (isUser) {
+                        userCount += flipRow.size();
+                        comCount -= flipRow.size();
+                    } else {
+                        userCount -= flipRow.size();
+                        comCount += flipRow.size();
+                    }
                     break;
                 }
             }
@@ -277,7 +320,13 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    if (isUser) userCount += flipRow.size();
+                    if (isUser) {
+                        userCount += flipRow.size();
+                        comCount -= flipRow.size();
+                    } else {
+                        userCount -= flipRow.size();
+                        comCount += flipRow.size();
+                    }
                     break;
                 }
             }

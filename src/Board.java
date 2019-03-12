@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class Board {
     int size;
     private Piece[][] pieces;
-    int comCount = 0;
-    int userCount = 0;
+    int comCount = 2;
+    int userCount = 2;
     private char computerPieceName = '0';
     private char userPieceName = '0';
     private Color userColor;
@@ -141,8 +141,9 @@ public class Board {
     void flip(int optimalI, int optimalJ, Color userColor) {
         ArrayList<Integer> flipRow = new ArrayList<>();
         ArrayList<Integer> flipColumn = new ArrayList<>();
-
+        boolean isUser = this.userColor != userColor;
         pieces[optimalI][optimalJ] = userColor == Color.BLACK ? new WhitePiece() : new BlackPiece();
+        if (isUser) userCount++;
         if (optimalI >= 1 && pieces[optimalI - 1][optimalJ] != null && pieces[optimalI - 1][optimalJ].color == userColor) {
             for (int row = optimalI - 1; row >= 0; row--) {
                 if (pieces[row][optimalJ] == null) break;
@@ -152,8 +153,7 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    flipColumn = new ArrayList<>();
-                    flipRow = new ArrayList<>();
+                    if (isUser) userCount += flipRow.size();
                     break;
                 }
             }
@@ -170,6 +170,8 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
+
+                    if (isUser) userCount += flipRow.size();
                     break;
                 }
             }
@@ -186,8 +188,7 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    flipColumn = new ArrayList<>();
-                    flipRow = new ArrayList<>();
+                    if (isUser) userCount += flipRow.size();
                     break;
                 }
             }
@@ -204,8 +205,7 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    flipColumn = new ArrayList<>();
-                    flipRow = new ArrayList<>();
+                    if (isUser) userCount += flipRow.size();
                     break;
                 }
             }
@@ -222,8 +222,7 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    flipColumn = new ArrayList<>();
-                    flipRow = new ArrayList<>();
+                    if (isUser) userCount += flipRow.size();
                     break;
                 }
             }
@@ -242,8 +241,7 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    flipColumn = new ArrayList<>();
-                    flipRow = new ArrayList<>();
+                    if (isUser) userCount += flipRow.size();
                     break;
                 }
             }
@@ -260,8 +258,7 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    flipColumn = new ArrayList<>();
-                    flipRow = new ArrayList<>();
+                    if (isUser) userCount += flipRow.size();
                     break;
                 }
             }
@@ -280,8 +277,7 @@ public class Board {
                 } else {
                     for (int i = 0; i < flipRow.size(); i++)
                         pieces[flipRow.get(i)][flipColumn.get(i)] = (userColor == Color.BLACK ? new WhitePiece() : new BlackPiece());
-                    flipColumn = new ArrayList<>();
-                    flipRow = new ArrayList<>();
+                    if (isUser) userCount += flipRow.size();
                     break;
                 }
             }
@@ -400,7 +396,13 @@ public class Board {
     }
 
     void finish() {
-        System.out.println("C:" + comCount + "    Per:" + userCount);
+        int blackCount = (userColor == Color.BLACK) ? userCount : comCount;
+        int whiteCount = (userColor == Color.BLACK) ? comCount : userCount;
+        System.out.println("Both players have no valid move.\n" +
+                "Game over.\n" +
+                "X : O = " + blackCount + " : " + whiteCount + "\n");
+        if (blackCount > whiteCount) System.out.println("X player wins.");
+        else System.out.println("O player wins.");
         System.exit(0);
     }
 

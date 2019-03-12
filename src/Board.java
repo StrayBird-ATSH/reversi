@@ -458,10 +458,16 @@ public class Board {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (pieces[i][j] == null) result.append(". ");
-                else result.append(pieces[i][j]);
+        for (int i = 0; i <= size; i++) {
+            for (int j = 0; j <= size; j++) {
+                if (i == 0) {
+                    if (j == 0) result.append("  ");
+                    if (j != 0)
+                        result.append((char) ('a' + j - 1)).append(" ");
+                } else if (j == 0) {
+                    result.append((char) ('a' + i - 1)).append(" ");
+                } else if (pieces[i - 1][j - 1] == null) result.append(". ");
+                else result.append(pieces[i - 1][j - 1]);
             }
             result.append("\n");
         }

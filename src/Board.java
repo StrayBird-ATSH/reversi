@@ -1,3 +1,4 @@
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Board {
@@ -454,7 +455,14 @@ public class Board {
         if (blackCount > whiteCount) System.out.println("X player wins.");
         else if (whiteCount > blackCount) System.out.println("O player wins.");
         else System.out.println("Draw!");
+        long currentTime = System.currentTimeMillis();
+        int timeElapsed = (int) (currentTime - Main.time);
+        writeLog(Main.time, timeElapsed, false);
         System.exit(0);
+    }
+
+    void writeLog(long startTime, int duration, boolean isGiveUp) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
     }
 
     @Override

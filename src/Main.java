@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class Main {
+    static long time;
+
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.println("Welcome to the Reversi game!\n" +
@@ -27,6 +29,7 @@ public class Main {
             System.out.println("Your input is illegal.");
             System.exit(0);
         }
+        time = System.currentTimeMillis();
         System.out.println(board);
         boolean computerTurn = !(board.getUserColor() == Color.BLACK);
         while (board.userCount + board.comCount == 0 || board.userCount + board.comCount < board.size * board.size &&

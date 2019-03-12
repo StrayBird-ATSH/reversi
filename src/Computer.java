@@ -15,6 +15,11 @@ public class Computer implements Playable {
 
     @Override
     public boolean placeable(Board board) {
-        return piece.placeable(board, false);
+        if (!piece.placeable(board, false)) {
+            if (piece.placeable(board, true))
+                System.out.print(board.computerPieceName + " player has no valid move. ");
+            return false;
+        }
+        return true;
     }
 }

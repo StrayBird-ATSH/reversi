@@ -5,8 +5,8 @@ public class Board {
     private Piece[][] pieces;
     int comCount = 2;
     int userCount = 2;
-    private char computerPieceName = '0';
-    private char userPieceName = '0';
+    char computerPieceName = '0';
+    char userPieceName = '0';
     private Color userColor;
 
     Board(int size) {
@@ -450,7 +450,7 @@ public class Board {
         int whiteCount = (userColor == Color.BLACK) ? comCount : userCount;
         System.out.println("Both players have no valid move.\n" +
                 "Game over.\n" +
-                "X : O = " + blackCount + " : " + whiteCount + "\n");
+                "X : O = " + blackCount + " : " + whiteCount);
         if (blackCount > whiteCount) System.out.println("X player wins.");
         else System.out.println("O player wins.");
         System.exit(0);

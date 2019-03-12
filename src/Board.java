@@ -130,6 +130,7 @@ public class Board {
                     if (currentScore > highestScore) {
                         optimalI = i;
                         optimalJ = j;
+                        highestScore = currentScore;
                     }
                 }
         System.out.println("Computer places " + computerPieceName + " at " +

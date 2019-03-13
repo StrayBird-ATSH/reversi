@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Board {
     int size;
@@ -462,7 +463,16 @@ public class Board {
     }
 
     void writeLog(long startTime, int duration, boolean isGiveUp) {
+        Date date = new Date(startTime);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
+        String log = dateFormat.format(date);
+        log += ("," + duration + ",");
+        log += (size + "*" + size + ",");
+        if (userColor == Color.BLACK) log += "computer,human,";
+        else log += "human,computer,";
+        if (isGiveUp) log += "Human gave up.";
+        else if (userColor == Color.BLACK) log += (comCount + " to " + userCount);
+        else log += (userColor + " to " + comCount);
     }
 
     @Override

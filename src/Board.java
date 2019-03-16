@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +11,7 @@ public class Board {
     int comCount = 2;
     int userCount = 2;
     char computerPieceName = '0';
-    char userPieceName = '0';
+    private char userPieceName = '0';
     private Color userColor;
 
     Board(int size) {
@@ -472,7 +475,15 @@ public class Board {
         else log += "human,computer,";
         if (isGiveUp) log += "Human gave up.";
         else if (userColor == Color.BLACK) log += (comCount + " to " + userCount);
-        else log += (userColor + " to " + comCount);
+        else log += (userColor + " to " + comCount + "\n");
+        File file = new File("reversi.csv");
+        try {
+            FileWriter fileWriter = new FileWriter(file, true);
+            fileWriter.append(log);
+        } catch (IOException e) {
+            System.out.println("Unexpected IO exception, the process will terminate");
+            e.printStackTrace();
+        }
     }
 
     @Override

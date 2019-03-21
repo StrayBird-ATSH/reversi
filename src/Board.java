@@ -469,13 +469,13 @@ public class Board {
         Date date = new Date(startTime);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
         String log = dateFormat.format(date);
-        log += ("," + duration + ",");
+        log += ("," + duration / 1000 + ",");
         log += (size + "*" + size + ",");
         if (userColor == Color.BLACK) log += "computer,human,";
         else log += "human,computer,";
         if (isGiveUp) log += "Human gave up.";
         else if (userColor == Color.BLACK) log += (comCount + " to " + userCount);
-        else log += (userColor + " to " + comCount + "\n");
+        else log += (userCount + " to " + comCount + "\n");
         File file = new File("reversi.csv");
         try (FileWriter fileWriter = new FileWriter(file, true)) {
             fileWriter.append(log);

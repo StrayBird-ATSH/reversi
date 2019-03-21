@@ -477,8 +477,7 @@ public class Board {
         else if (userColor == Color.BLACK) log += (comCount + " to " + userCount);
         else log += (userColor + " to " + comCount + "\n");
         File file = new File("reversi.csv");
-        try {
-            FileWriter fileWriter = new FileWriter(file, true);
+        try (FileWriter fileWriter = new FileWriter(file, true)) {
             fileWriter.append(log);
         } catch (IOException e) {
             System.out.println("Unexpected IO exception, the process will terminate");

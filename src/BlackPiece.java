@@ -26,7 +26,6 @@ class BlackPiece extends Piece {
 
     @Override
     void placeOptimal(Board board) {
-
     }
 
     @Override

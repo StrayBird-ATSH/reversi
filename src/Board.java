@@ -475,7 +475,7 @@ public class Board {
         else log += "human,computer,";
         if (isGiveUp) log += "Human gave up.";
         else if (userColor == Color.BLACK) log += (comCount + " to " + userCount);
-        else log += (userCount + " to " + comCount + "\n");
+        else log += (userCount + " to " + comCount + "\r\n");
         File file = new File("reversi.csv");
         try (FileWriter fileWriter = new FileWriter(file, true)) {
             fileWriter.append(log);

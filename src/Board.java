@@ -114,6 +114,10 @@ public class Board {
 
     /**
      * This method is used to flip the opponents' pieces after placing a piece
+     *
+     * @param optimalI  The row index of the selected position
+     * @param optimalJ  The column index of the selected position
+     * @param userColor The color of the user
      */
     void flip(int optimalI, int optimalJ, Color userColor) {
         ArrayList<Integer> flipRow = new ArrayList<>();

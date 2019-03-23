@@ -32,16 +32,16 @@ public class Person implements Playable {
         piece.personPrompt();
         Scanner input = new Scanner(System.in);
         String string = input.nextLine();
-        int row = string.charAt(0) - 'a';
-        int column = string.charAt(1) - 'a';
-        if (row < 0 || row >= board.size || column < 0 || column >= board.size ||
-                board.calculateScore(row, column, true) == 0) {
+        if (string.length() != 2 || string.charAt(0) - 'a' < 0 || string.charAt(0) - 'a' >= board.size ||
+                string.charAt(1) - 'a' < 0 || string.charAt(1) - 'a' >= board.size ||
+                board.calculateScore(string.charAt(0) - 'a', string.charAt(1) - 'a', true) == 0) {
             if (piece instanceof BlackPiece) System.out.println("Invalid move.\nGame Over.\nO player wins.");
             else System.out.println("Invalid move.\nGame Over.\nX player wins.");
             board.writeLog(Main.time, (int) (System.currentTimeMillis() - Main.time), true);
             System.exit(0);
         } else {
-            board.flip(row, column, piece.color == Color.WHITE ? Color.BLACK : Color.WHITE);
+            board.flip(string.charAt(0) - 'a', string.charAt(1) - 'a',
+                    piece.color == Color.WHITE ? Color.BLACK : Color.WHITE);
             System.out.println(board);
         }
     }

@@ -1,6 +1,9 @@
 import java.util.Scanner;
 
 public class Main {
+    /**
+     * This static variable is used to record the starting time.
+     */
     static long time;
 
     public static void main(String[] args) {

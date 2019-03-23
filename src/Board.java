@@ -6,23 +6,65 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * The chess board object, storing all the chess data, and performs the piece placing
+ * operation.
+ *
+ * @author Wang, Chen
+ */
 public class Board {
+    /**
+     * The dimension of the chess board.
+     */
     int size;
-    private Piece[][] pieces;
+    /**
+     * The number of user's pieces on the board. The initial value is 2
+     */
     int comCount = 2;
+    /**
+     * The number of computer's pieces on the board. The initial value is 2
+     */
     int userCount = 2;
+    /**
+     * Character holding the name of the computer's piece.
+     * The value is used to in the prompt lines
+     */
     char computerPieceName = '0';
+    /**
+     * The array keeping the data of the chess board.
+     */
+    private Piece[][] pieces;
+    /**
+     * Stores the user's selected color in this game.
+     */
     private Color userColor;
 
+    /**
+     * Constructor with a specified size.
+     *
+     * @param size The dimension of the board.
+     */
     Board(int size) {
         this.size = size;
         pieces = new Piece[size][size];
     }
 
+    /**
+     * Getter method of the user color attribute,
+     *
+     * @return The color of the user.
+     */
     Color getUserColor() {
         return userColor;
     }
 
+    /**
+     * The setter method of the user color attribute.
+     * This method also initializes the chessboard and other
+     * color-specific attributes.
+     *
+     * @param userColor The selected color of the user.
+     */
     void setUserColor(Color userColor) {
         if (userColor == Color.BLACK)
             computerPieceName = 'O';
@@ -34,6 +76,12 @@ public class Board {
         pieces[size / 2][size / 2 - 1] = new BlackPiece();
     }
 
+    /**
+     * Checks whether this player can put a piece on the board.
+     *
+     * @param isUser if the caller player is user
+     * @return true if the player can have valid move and false otherwise
+     */
     boolean checkCanPlace(boolean isUser) {
         for (int i = 0; i < size; i++)
             for (int j = 0; j < size; j++)
@@ -41,6 +89,9 @@ public class Board {
         return false;
     }
 
+    /**
+     * This method is for the computer side to place the piece at the optimal place
+     */
     void placeOpt() {
         int highestScore = 0;
         int currentScore;
@@ -61,6 +112,9 @@ public class Board {
         System.out.println(this);
     }
 
+    /**
+     * This method is used to flip the opponents' pieces after placing a piece
+     */
     void flip(int optimalI, int optimalJ, Color userColor) {
         ArrayList<Integer> flipRow = new ArrayList<>();
         ArrayList<Integer> flipColumn = new ArrayList<>();
@@ -256,7 +310,15 @@ public class Board {
         }
     }
 
-
+    /**
+     * This method calculates how much score the player can get if placing
+     * a piece at (i,j)
+     *
+     * @param i      The row number of the piece
+     * @param j      The column number of the piece
+     * @param isUser whether the caller is the user
+     * @return The total score of the current position
+     */
     int calculateScore(int i, int j, boolean isUser) {
         Color userColor = this.userColor;
         if (isUser) userColor = userColor == Color.BLACK ? Color.WHITE : Color.BLACK;
@@ -365,6 +427,10 @@ public class Board {
         return score;
     }
 
+    /**
+     * The handler when the game finishes. This method should be called
+     * when whatever condition results the game to get over.
+     */
     void finish() {
         int blackCount = (userColor == Color.BLACK) ? userCount : comCount;
         int whiteCount = (userColor == Color.BLACK) ? comCount : userCount;
@@ -380,6 +446,13 @@ public class Board {
         System.exit(0);
     }
 
+    /**
+     * The log writing method.
+     *
+     * @param startTime The starting time of the game
+     * @param duration  The length of the game, in seconds
+     * @param isGiveUp  Whether the person gives up the game
+     */
     void writeLog(long startTime, int duration, boolean isGiveUp) {
         Date date = new Date(startTime);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd HH:mm:ss");
@@ -400,6 +473,12 @@ public class Board {
         }
     }
 
+    /**
+     * Returns a string representation of the object.
+     * This is used to print the entire chess board.
+     *
+     * @return a string representation of the object.
+     */
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();

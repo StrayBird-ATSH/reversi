@@ -10,22 +10,8 @@ class BlackPiece extends Piece {
     }
 
     @Override
-    Color getColor() {
-        return color;
-    }
-
-    @Override
-    void computerPrompt() {
-        System.out.println("Computer places X at:");
-    }
-
-    @Override
     boolean placeable(Board board, boolean isUser) {
         return board.checkCanPlace(isUser);
-    }
-
-    @Override
-    void placeOptimal(Board board) {
     }
 
     @Override

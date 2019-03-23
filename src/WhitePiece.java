@@ -9,11 +9,6 @@ class WhitePiece extends Piece {
     }
 
     @Override
-    Color getColor() {
-        return color;
-    }
-
-    @Override
     public String toString() {
         return "O ";
     }
@@ -21,14 +16,5 @@ class WhitePiece extends Piece {
     @Override
     void personPrompt() {
         System.out.println("Enter move for O (RowCol):");
-    }
-
-    @Override
-    void computerPrompt() {
-        System.out.println("Computer places O at:");
-    }
-
-    @Override
-    void placeOptimal(Board board) {
     }
 }
